@@ -1,11 +1,11 @@
 {
   "name": "vuelidate-errors-catch",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.js",
   "author": "Samuel Desconsi",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/SamXDesc/vuelidate-errors-catch"
+    "type": "git",
+    "url": "https://github.com/SamXDesc/vuelidate-errors-catch"
   }
 }
