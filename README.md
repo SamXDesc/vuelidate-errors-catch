@@ -1,0 +1,1 @@
+# vuelidate-errors-catch
