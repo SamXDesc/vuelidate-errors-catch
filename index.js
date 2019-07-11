@@ -11,8 +11,6 @@ const ValidationExtractor = {
 
       Object.keys(params).map(type => {
         if (!validation[type]) {
-          console.log(Object.keys(messages).includes(type), Object.keys(messages), type)
-
           if (Object.keys(messages).includes(type)) {
             if (typeof messages[type] === 'function') {
               errors.push(messages[type](params[type]))
