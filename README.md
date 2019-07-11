@@ -1,4 +1,4 @@
-# Vuelidate Catch Errors
+# Vuelidate Catch Errors (Alpha)
 
 The main idea from this package is generate error messages with the validation schema provided by vuelidate. It's a personal package (and initially open because I don't want to pay just to make it private) that reached the mínimum viable product for my personal use, but, thinking better, I believe that this can grow and solve problems from other people too.
 

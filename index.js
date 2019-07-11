@@ -1,27 +1,35 @@
 import messages from './messages/pt-br'
 
-export default validation => {
-  let errors = []
+const ValidationExtractor = {
+  install: (Vue, options) => {
+    Vue.prototype.$extractor = validation => {
+      let errors = []
 
-  let params = validation.$params
+      let params = validation.$params
 
-  Object.keys(params).map(type => {
-  	if (!validation[type]) {
-      console.log(Object.keys(messages).includes(type), Object.keys(messages), type)
+      const defaultMessage = 'Campo incorreto'
 
-    	if (Object.keys(messages).includes(type)) {
-      	if (typeof messages[type] === 'function') {
-          errors.push(messages[type](params[type]))
-          return
+      Object.keys(params).map(type => {
+        if (!validation[type]) {
+          console.log(Object.keys(messages).includes(type), Object.keys(messages), type)
+
+          if (Object.keys(messages).includes(type)) {
+            if (typeof messages[type] === 'function') {
+              errors.push(messages[type](params[type]))
+              return
+            }
+
+            errors.push(messages[type])
+            return
+          }
+
+           errors.push(defaultMessage)
         }
+      })
 
-        errors.push(messages[type])
-        return
-      }
-
-     	errors.push('Campo incorreto')
+      return errors
     }
-  })
-
-  return errors
+  }
 }
+
+export default ValidationExtractor
