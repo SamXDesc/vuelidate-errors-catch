@@ -10,27 +10,17 @@ How to use:
 npm install vuelidate-errors-catch
 ```
 
-Then import into the component:
+Then import and attach to Vue using Vue.use:
 ```
-import extractor from 'vuelidate-errors-catch'
+import VuelidateErrorsCatch from 'vuelidate-errors-catch'
+
+Vue.use(VuelidateErrorsCatch)
 ```
 
-And then, register into methods:
-
-```
-export default {
-    ...
-    methods: {
-        extractor
-    },
-    ...
-}
-```
-
-For the last step, call it into the component:
+And then, use it into the component:
 ```
 <input v-model="test">
-<div v-for="(message, index) in extractor($v.test)" :key="index">
+<div v-for="(message, index) in $extractor($v.test)" :key="index">
     {{ message }}
 </div>
 ```
