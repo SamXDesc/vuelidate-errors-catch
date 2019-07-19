@@ -6,6 +6,8 @@ const ValidationExtractor = {
       let errors = []
 
       if (validation.hasOwnProperty('$params')) {
+        console.log('Has params')
+
         let params = validation.$params
 
         const defaultMessage = 'Campo incorreto'
