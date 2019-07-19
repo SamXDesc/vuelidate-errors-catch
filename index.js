@@ -5,25 +5,27 @@ const ValidationExtractor = {
     Vue.prototype.$extractor = validation => {
       let errors = []
 
-      let params = validation.$params
+      if (validation.hasOwnProperty('$params')) {
+        let params = validation.$params
 
-      const defaultMessage = 'Campo incorreto'
+        const defaultMessage = 'Campo incorreto'
 
-      Object.keys(params).map(type => {
-        if (!validation[type]) {
-          if (Object.keys(messages).includes(type)) {
-            if (typeof messages[type] === 'function') {
-              errors.push(messages[type](params[type]))
+        Object.keys(params).map(type => {
+          if (!validation[type]) {
+            if (Object.keys(messages).includes(type)) {
+              if (typeof messages[type] === 'function') {
+                errors.push(messages[type](params[type]))
+                return
+              }
+
+              errors.push(messages[type])
               return
             }
 
-            errors.push(messages[type])
-            return
+            errors.push(defaultMessage)
           }
-
-           errors.push(defaultMessage)
-        }
-      })
+        })
+      }
 
       return errors
     }
