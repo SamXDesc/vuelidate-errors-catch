@@ -1,4 +1,4 @@
-# Vuelidate Catch Errors
+# Vuelidate Catch Errors (Alpha)
 
 The main idea from this package is generate error messages with the validation schema provided by vuelidate. It's a personal package (and initially open because I don't want to pay just to make it private) that reached the mínimum viable product for my personal use, but, thinking better, I believe that this can grow and solve problems from other people too.
 
@@ -10,27 +10,17 @@ How to use:
 npm install vuelidate-errors-catch
 ```
 
-Then import into the component:
+Then import and attach to Vue using Vue.use:
 ```
-import extractor from 'vuelidate-errors-catch'
+import VuelidateErrorsCatch from 'vuelidate-errors-catch'
+
+Vue.use(VuelidateErrorsCatch)
 ```
 
-And then, register into methods:
-
-```
-export default {
-    ...
-    methods: {
-        extractor
-    },
-    ...
-}
-```
-
-For the last step, call it into the component:
+And then, use it into the component:
 ```
 <input v-model="test">
-<div v-for="(message, index) in extractor($v.test)" :key="index">
+<div v-for="(message, index) in $extractor($v.test)" :key="index">
     {{ message }}
 </div>
 ```
