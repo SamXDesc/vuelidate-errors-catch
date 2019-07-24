@@ -2,6 +2,9 @@
   "name": "vuelidate-errors-catch",
   "version": "1.0.12",
   "main": "index.js",
+  "files": [
+    "/messages"
+  ],
   "author": "Samuel Desconsi",
   "license": "MIT",
   "repository": {

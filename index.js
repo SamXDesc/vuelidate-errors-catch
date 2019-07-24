@@ -1,28 +1,32 @@
-import messages from './messages/pt-br'
+import * as messages from './messages'
 
 const ValidationExtractor = {
   install: (Vue, options) => {
+    console.log(messages['enUS'])
+
     Vue.prototype.$extractor = validation => {
       let errors = []
+
+      let language = options.language ? options.language : 'ptBR'
 
       if (validation.hasOwnProperty('$params')) {
         let params = validation.$params
 
-        const defaultMessage = 'Campo incorreto'
+        Object.assign(messages[language], options.messages)
 
         Object.keys(params).map(type => {
           if (!validation[type]) {
-            if (Object.keys(messages).includes(type)) {
-              if (typeof messages[type] === 'function') {
-                errors.push(messages[type](params[type]))
+            if (Object.keys(messages[language]).includes(type)) {
+              if (typeof messages[language][type] === 'function') {
+                errors.push(messages[language][type](params[type], options.fields))
                 return
               }
 
-              errors.push(messages[type])
+              errors.push(messages[language][type])
               return
             }
 
-            errors.push(defaultMessage)
+            errors.push(messages[language]['invalidField'])
           }
         })
       }
