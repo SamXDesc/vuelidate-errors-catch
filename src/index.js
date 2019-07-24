@@ -27,8 +27,6 @@ export default class Main {
       Object.keys(params).map(type => {
         if (!validation[type]) {
           if (Object.keys(messages).includes(type)) {
-            console.log(params, type)
-
             let scopeField = this._scopeFields(params[type])
 
             if (!isFunction(scopeField)) {
