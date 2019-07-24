@@ -20,7 +20,23 @@
       <div class="input-scope">
         <input
           type="text"
-          id="name"
+          id="lastname"
+          placeholder="Sobrenome"
+          v-model="form.lastname"
+          class="input"
+          @blur="$v.form.lastname.$touch()"
+          :class="$v.form.lastname.$error ? 'input-error' : ''"
+        />
+
+        <div v-if="$v.form.lastname.$error">
+          <span class="input-message tomato" v-for="(error, idx) in $extractor($v.form.lastname)" :key="idx">{{ error }}</span>
+        </div>
+      </div>
+
+      <div class="input-scope">
+        <input
+          type="text"
+          id="email"
           placeholder="E-mail"
           v-model="form.email"
           class="input"
@@ -36,7 +52,7 @@
       <div class="input-scope">
         <input
           type="text"
-          id="name"
+          id="confirmEmail"
           placeholder="Confirmar E-mail"
           v-model="form.confirmEmail"
           class="input"
@@ -46,22 +62,6 @@
 
         <div v-if="$v.form.confirmEmail.$error">
           <span class="input-message tomato" v-for="(error, idx) in $extractor($v.form.confirmEmail)" :key="idx">{{ error }}</span>
-        </div>
-      </div>
-
-      <div class="input-scope">
-        <input
-          type="text"
-          id="lastname"
-          placeholder="Sobrenome"
-          v-model="form.lastname"
-          class="input"
-          @blur="$v.form.lastname.$touch()"
-          :class="$v.form.lastname.$error ? 'input-error' : ''"
-        />
-
-        <div v-if="$v.form.lastname.$error">
-          <span class="input-message tomato" v-for="(error, idx) in $extractor($v.form.lastname)" :key="idx">{{ error }}</span>
         </div>
       </div>
 
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { required, requiredIf, minLength, email, sameAs } from 'vuelidate/lib/validators'
+import { required, requiredIf, between, email, sameAs } from 'vuelidate/lib/validators'
 import { document } from '../validators'
 import AwesomeMask from 'awesome-mask'
 
@@ -138,8 +138,10 @@ export default {
 
   validations: {
     form: {
-      name: { required, minLength: minLength(3) },
-      lastname: { requiredIf: requiredIf('name') },
+      name: { required, between: between(3, 6) },
+      lastname: {
+        requiredIf: requiredIf(param => param.name.length > 0)
+      },
       email: { required, email },
       confirmEmail: { sameAs: sameAs('email') },
       document: { required, document }
@@ -202,6 +204,7 @@ export default {
     padding: 0.7em;
     border-radius: 5px;
     font-size: 16px;
+    cursor: pointer;
   }
 
   .btn-primary {

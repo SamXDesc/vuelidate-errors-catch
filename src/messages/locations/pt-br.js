@@ -1,9 +1,11 @@
+import isFunction from '../../helpers/IsFunction'
+
 const invalid = `Campo inválido`
 
 export default {
   required: `Este campo é obrigatório`,
-  requiredIf: (params, fields) => params.prop && typeof params.prop !== 'function' ? `Obrigatório se o campo '${fields[params.prop]}' estiver preenchido` : invalid,
-  requiredUnless: (params, fields) => params.prop && typeof params.prop !== 'function' ? `Obrigatório se o campo '${fields[params.prop]}' não estiver preenchido` : invalid,
+  requiredIf: field => field && !isFunction(field) ? `Obrigatório se o campo '${field}' estiver preenchido` : invalid,
+  requiredUnless: field => field && !isFunction(field) ? `Obrigatório se o campo '${field}' não estiver preenchido` : invalid,
   minLength: params => params.min ? `Tamanho mínimo de ${params.min} caracteres é obrigatório` : invalid,
   maxLength: params => params.max ? `Tamanho máximo de ${params.max} foi excedido` : invalid,
   minValue: params => params.min ? `Valor mínimo de ${params.min} é obrigatório` : invalid,
@@ -17,7 +19,7 @@ export default {
   email: `Informe um endereço de e-mail válido`,
   ipAddress: `Informe um endereço IP válido`,
   macAddress: `Informe um endereço MAC válido`,
-  sameAs: (params, fields) => params.eq ? `Valor informado deve ser igual a ${fields[params.eq]}` : invalid,
+  sameAs: field => field && !isFunction(field) ? `Valor informado deve ser igual a ${field}` : invalid,
   url: `Informe uma URL válida`,
   invalidField: invalid
 }

@@ -8,7 +8,6 @@ import router from './router'
 
 Vue.use(Vuelidate)
 Vue.use(VuelidateErrorsCatch, {
-  language: 'enUS',
   messages: {
     document: 'CPF inválido'
   },

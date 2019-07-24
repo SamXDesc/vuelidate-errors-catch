@@ -1,9 +1,11 @@
+import isFunction from '../../helpers/IsFunction'
+
 const invalid = `Field invalid`
 
 export default {
   required: `This field is required`,
-  requiredIf: (params, fields) => params.prop && typeof params.prop !== 'function' ? `Required if the field '${fields[params.prop]}' has filled` : invalid,
-  requiredUnless: (params, fields) => params.prop && typeof params.prop !== 'function' ? `Required unless the field '${fields[params.prop]}' doesn't has required` : invalid,
+  requiredIf: field => field && !isFunction(field) ? `Required if the field '${field}' has filled` : invalid,
+  requiredUnless: field => field && !isFunction(field) ? `Required unless the field '${field}' doesn't has required` : invalid,
   minLength: params => params.min ? ` Mininum length of ${params.min} characters is required` : invalid,
   maxLength: params => params.max ? `Maximum length of ${params.max} has exceeded` : invalid,
   minValue: params => params.min ? `Minimum value of ${params.min} is required` : invalid,
@@ -17,7 +19,7 @@ export default {
   email: `E-mail invalid`,
   ipAddress: `IP invalid`,
   macAddress: `MAC invalid`,
-  sameAs: (params, fields) => params.eq ? `Value must be equal to ${fields[params.eq]} field` : invalid,
+  sameAs: field => field && !isFunction(field) ? `Value must be equal to ${field} field` : invalid,
   url: `URL invalid`,
   invalidField: invalid
 }
