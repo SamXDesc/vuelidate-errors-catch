@@ -8,10 +8,9 @@ import router from './router'
 
 Vue.use(Vuelidate)
 Vue.use(VuelidateErrorsCatch, {
-  language: 'fr',
+  language: 'ptBR',
   messages: {
-    required: 'Ce champ est obligatoire',
-    invalidField: 'Champ invalide'
+    document: 'CPF inválido'
   },
   fields: {
     document: 'CPF',

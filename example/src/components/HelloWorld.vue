@@ -87,9 +87,9 @@
         <button class="btn" @click="reset">Reset</button>
       </div>
 
-      <br>
+      <hr>
 
-      {{ $v }}
+      <code>{{ $v }}</code>
 
     </div>
   </div>

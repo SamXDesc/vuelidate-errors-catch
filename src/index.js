@@ -24,8 +24,6 @@ export default class Main {
 
       Object.assign(messages, this.options.messages)
 
-      console.log(messages)
-
       Object.keys(params).map(type => {
         if (!validation[type]) {
           if (Object.keys(messages).includes(type)) {
@@ -63,24 +61,23 @@ export default class Main {
   }
 
   _scopeFields (params) {
+    if (params) {
+      delete params.type
 
-    console.log(params)
+      if (Object.keys(params).length === 1) {
+        let parameter = Object.values(params)[0]
 
-    delete params.type
+        switch (true) {
+          case typeof parameter === 'string' && Object.keys(this.fields).includes(parameter):
+            if (this.fields.hasOwnProperty(parameter)) {
+              return this.fields[parameter]
+            }
 
-    if (Object.keys(params).length === 1) {
-      let parameter = Object.values(params)[0]
+            break
 
-      switch (true) {
-        case typeof parameter === 'string' && Object.keys(this.fields).includes(parameter):
-          if (this.fields.hasOwnProperty(parameter)) {
-            return this.fields[parameter]
-          }
-
-          break
-
-        case typeof parameter === 'function':
-          return parameter
+          case typeof parameter === 'function':
+            return parameter
+        }
       }
     }
 
