@@ -3,7 +3,7 @@
   "version": "1.0.15",
   "main": "index.js",
   "files": [
-    "/messages"
+    "/src"
   ],
   "author": "Samuel Desconsi",
   "license": "MIT",
