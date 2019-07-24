@@ -1,4 +1,7 @@
 import * as languagePack from './messages'
+import isFunction from './helpers/IsFunction'
+
+const defaultLanguage = 'enUS'
 
 export default class Main {
   constructor(options) {
@@ -12,24 +15,31 @@ export default class Main {
   run(validation) {
     let errors = []
 
-    let messages = languagePack[this.language]
+    let messages = Object.keys(languagePack).includes(this.language)
+      ? languagePack[this.language]
+      : languagePack[defaultLanguage]
 
     if (validation.hasOwnProperty('$params')) {
       let params = validation.$params
 
       Object.assign(messages, this.options.messages)
 
+      console.log(messages)
+
       Object.keys(params).map(type => {
         if (!validation[type]) {
-
           if (Object.keys(messages).includes(type)) {
-            if (typeof messages[type] === 'function') {
-              errors.push(messages[type](this._scopeFields(params[type])))
+            let scopeField = this._scopeFields(params[type])
+
+            if (scopeField && !isFunction(scopeField)) {
+              if (typeof messages[type] === 'function') {
+                errors.push(messages[type](scopeField))
+                return
+              }
+
+              errors.push(messages[type])
               return
             }
-
-            errors.push(messages[type])
-            return
           }
 
           errors.push(messages['invalidField'])
@@ -43,7 +53,7 @@ export default class Main {
   _language () {
     const { language } = this.options
 
-    return language ? language : 'ptBR'
+    return language ? language : defaultLanguage
   }
 
   _fields () {
@@ -53,6 +63,9 @@ export default class Main {
   }
 
   _scopeFields (params) {
+
+    console.log(params)
+
     delete params.type
 
     if (Object.keys(params).length === 1) {
