@@ -68,14 +68,14 @@ export default class Main {
         let parameter = Object.values(params)[0]
 
         switch (true) {
-          case typeof parameter === 'string' && Object.keys(this.fields).includes(parameter):
+          case typeof parameter !== 'function' && Object.keys(this.fields).includes(parameter):
             if (this.fields.hasOwnProperty(parameter)) {
               return this.fields[parameter]
             }
 
             break
 
-          case typeof parameter === 'function':
+          default:
             return parameter
         }
       }

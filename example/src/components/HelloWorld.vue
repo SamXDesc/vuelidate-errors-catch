@@ -82,6 +82,23 @@
         </div>
       </div>
 
+      <div class="input-scope">
+        <input
+          type="text"
+          id="money"
+          placeholder="Valor"
+          v-model="form.money"
+          v-mask="'money'"
+          class="input"
+          @blur="$v.form.money.$touch()"
+          :class="$v.form.money.$error ? 'input-error' : ''"
+        />
+
+        <div v-if="$v.form.money.$error">
+          <span class="input-message tomato" v-for="(error, idx) in $extractor($v.form.money)" :key="idx">{{ `${error} ` }}</span>
+        </div>
+      </div>
+
       <div class="text-center">
         <button class="btn btn-primary" @click="confirm">Validate</button>
         <button class="btn" @click="reset">Reset</button>
@@ -96,9 +113,14 @@
 </template>
 
 <script>
-import { required, requiredIf, between, email, sameAs } from 'vuelidate/lib/validators'
+import { required, requiredIf, between, email, sameAs, helpers } from 'vuelidate/lib/validators'
 import { document } from '../validators'
 import AwesomeMask from 'awesome-mask'
+
+/**
+ * @param max
+ */
+const maxMoney = param => helpers.withParams({ type: 'maxMoney', max: param }, async value => await parseFloat(value.replace(/\D/g, '') / 100) <= param)
 
 export default {
   name: 'hello-world',
@@ -110,11 +132,12 @@ export default {
   data: () => {
     return {
       form: {
-        name: '',
-        email: '',
+        name: 'Test',
+        email: 'sam',
         confirmEmail: '',
         lastname: '',
-        document: ''
+        document: '',
+        money: '150,00'
       }
     }
   },
@@ -144,7 +167,8 @@ export default {
       },
       email: { required, email },
       confirmEmail: { sameAs: sameAs('email') },
-      document: { required, document }
+      document: { required, document },
+      money: { maxMoney: maxMoney(100) }
     }
   }
 }

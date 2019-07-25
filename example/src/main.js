@@ -10,7 +10,8 @@ Vue.use(Vuelidate)
 Vue.use(VuelidateErrorsCatch, {
   language: 'ptBR',
   messages: {
-    document: 'CPF inválido'
+    document: 'CPF inválido',
+    maxMoney: field => `Valor máximo de ${field.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', currencyDisplay: 'symbol', minimumFractionDigits: 2 })} atingido`
   },
   fields: {
     document: 'CPF',
