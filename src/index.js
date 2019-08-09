@@ -25,46 +25,25 @@ export default class Main {
       let params = validation.$params
 
       Object.keys(params).map(type => {
+        if (validation.$error && !validation[type]) {
+          if (this.messages.hasOwnProperty(type)) {
+            let scopeField = this._scopeFields(params[type])
 
-        // Check if message exist
-        if (this.messages.hasOwnProperty(type)) {
-          let scopeField = this._scopeFields(params[type])
+            if (!isFunction(scopeField)) {
 
-          if (!isFunction(scopeField)) {
+              if (isFunction(this.messages[type])) {
+                errors.push(this.messages[type](scopeField))
+                return
+              }
 
-            if (isFunction(this.messages[type])) {
-              console.log(type)
-
-              errors.push(this.messages[type](scopeField))
+              errors.push(this.messages[type])
               return
             }
-
-            errors.push(this.messages[type])
-            return
           }
+
+          errors.push(this.messages['invalidField'])
         }
-
-        // Else, set generic message
-        errors.push(this.messages['invalidField'])
       })
-
-      // Object.keys(params).map(type => {
-      //   if (!Object.keys(validation).includes(type)) {
-
-      //     console.log(validation, type)
-
-
-      //     // if (Object.keys(messages).includes(type)) {
-      //     //   console.log(params[type])
-
-
-
-      //     //
-      //     // }
-
-
-      //   }
-      // })
     }
 
     return errors
@@ -93,8 +72,6 @@ export default class Main {
         if (!isFunction(parameter) && this.fields.hasOwnProperty(parameter)) {
           return this.fields[parameter]
         }
-
-        console.log('fall in here')
 
         return parameter
       }
