@@ -1,6 +1,6 @@
 {
   "name": "vuelidate-errors-catch",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "main": "index.js",
   "files": [
     "/src"
