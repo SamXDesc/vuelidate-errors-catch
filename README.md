@@ -1,29 +1,65 @@
 # Vuelidate Errors Catch
 
-**Package unstable, working on it.**
-For now, the main language is **only pt-BR**.
+> Simple error message extrator for Vuelidate.
 
-The main idea from this package is generate error messages with the validation schema provided by vuelidate. It's a personal package (and initially open because I don't want to pay just to make it private) that reached the mínimum viable product for my personal use, but, thinking better, I believe that this can grow and solve problems from other people too.
+## Features & characteristics
 
-If you want to contribute, please, send a pull request.
+* Ready to use
+* Support custom messages
+* Support other languages
+* Support custom attribute names
+* No vue component for message bag, it's an array of messages
 
-How to use:
 
+### Prerequisites
+
+Works with Vuelidate.
+
+### Installing and usage
+
+Install the package:
 ```
-npm install vuelidate-errors-catch
+yarn add vuelidate-errors-catch or npm install vuelidate-errors-catch
 ```
 
-Then import and attach to Vue using Vue.use:
+Import into your main.js application file:
 ```
 import VuelidateErrorsCatch from 'vuelidate-errors-catch'
-
-Vue.use(VuelidateErrorsCatch)
 ```
 
-And then, use it into the component:
+Binds to the Vue app instance:
 ```
-<input v-model="test">
-<div v-for="(message, index) in $extractor($v.test)" :key="index">
-    {{ message }}
-</div>
+Vue.use(VuelidateErrorsCatch, {
+  language: 'ptBR',
+  messages: {
+    // custom messages [key: value]
+  },
+  fields: {
+    // custom fields [key: value]
+  }
+})
 ```
+
+## API Referencce
+
+**language**: The default message language. This version has only english (en-US) and portuguese (pt-BR) language files. *Want to see your language here, please, send a PR.*
+
+**messages**: You can add your own custom messages, can be a String or a Function.
+```
+messages: {
+    document: 'Invalid document.',
+    maxMoney: field => `Maximum value of ${field.toLocaleString('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'symbol', minimumFractionDigits: 2 })} reached.`
+}
+```
+
+**fields**: The form attribute name, or form fields. The package will use for change a raw name for a user-friendly name.
+```
+fields: {
+    ssn: 'social security number',
+    user_email: 'email'
+}
+```
+
+## Contributing
+
+You found a bug? Wish to contribute with the project? Send a PR.
