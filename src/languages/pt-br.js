@@ -1,5 +1,3 @@
-import isFunction from '../../helpers/IsFunction'
-
 const invalid = `Campo inválido`
 
 export default {

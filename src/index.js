@@ -1,5 +1,5 @@
 import * as languagePack from './messages'
-import isFunction from './helpers/IsFunction'
+import { isFunction } from './helpers'
 
 const defaultLanguage = 'enUS'
 
@@ -18,7 +18,7 @@ export default class Main {
     Object.assign(this.messages, this.options.messages)
   }
 
-  run(validation) {
+  run (validation) {
     let errors = []
 
     if (validation.hasOwnProperty('$params')) {
