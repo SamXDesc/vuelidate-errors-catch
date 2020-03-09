@@ -1,4 +1,4 @@
-import * as languagePack from './messages'
+import * as languagePack from './languages'
 import { isFunction } from './helpers'
 
 const defaultLanguage = 'enUS'

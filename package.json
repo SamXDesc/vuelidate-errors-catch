@@ -2,9 +2,6 @@
   "name": "vuelidate-errors-catch",
   "version": "1.0.19",
   "main": "index.js",
-  "files": [
-    "/src"
-  ],
   "author": "Samuel Desconsi",
   "license": "MIT",
   "repository": {
